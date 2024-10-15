@@ -1,4 +1,4 @@
-const ProfileContent = () => (
+const ProfileContent = ({username,email}) => (
     <div className="p-6">
       <h2 className="text-2xl font-semibold mb-4">User Profile</h2>
       <div className="bg-white shadow-md rounded-lg p-6">
@@ -7,8 +7,8 @@ const ProfileContent = () => (
             <span className="text-2xl font-medium text-gray-600">JD</span>
           </div>
           <div className="ml-4">
-            <h3 className="text-xl font-semibold">John Doe</h3>
-            <p className="text-gray-600">john.doe@example.com</p>
+            <h3 className="text-xl font-semibold">{username}</h3>
+            <p className="text-gray-600">{email}</p>
           </div>
         </div>
         <div className="mt-4">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Home, User, Settings, Menu, X, ChevronDown } from 'lucide-react';
+import { Home, User, Settings, Menu, X, ChevronDown} from 'lucide-react';
 import SettingsContent from './Settings';
 import ProfileContent from './Profile';
 import ChartComponent from './ChartComponent';
@@ -43,7 +43,7 @@ const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen, username, email
                 className="flex items-center space-x-2 focus:outline-none"
             >
                 <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
-                    <span className="text-sm font-medium text-white">JD</span>
+                    <User className="text-white h-5 w-5" />
                 </div>
                 <ChevronDown className="h-4 w-4 text-gray-500" />
             </button>
@@ -63,29 +63,29 @@ const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen, username, email
 
 const DashboardContent = () => (
     <>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-        <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-2">Total Users</h3>
-            <p className="text-3xl font-bold">1,234</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-2">Total Users</h3>
+                <p className="text-3xl font-bold">1,234</p>
+            </div>
+            <div className="bg-green-500 text-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-2">Revenue</h3>
+                <p className="text-3xl font-bold">$12,345</p>
+            </div>
+            <div className="bg-yellow-500 text-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-2">Active Projects</h3>
+                <p className="text-3xl font-bold">42</p>
+            </div>
         </div>
-        <div className="bg-green-500 text-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-2">Revenue</h3>
-            <p className="text-3xl font-bold">$12,345</p>
+        <div className="flex-grow flex flex-col">
+            <div className="flex-grow overflow-auto">
+                <Todo />
+            </div>
+            <div className="flex-grow overflow-auto mt-4">
+                <ChartComponent />
+            </div>
         </div>
-        <div className="bg-yellow-500 text-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-2">Active Projects</h3>
-            <p className="text-3xl font-bold">42</p>
-        </div>
-    </div>
-    <div className="flex-grow flex flex-col">
-      <div className="flex-grow overflow-auto">
-        <Todo />
-      </div>
-      <div className="flex-grow overflow-auto mt-4">
-        <ChartComponent />
-      </div>
-    </div>
-   </>
+    </>
 );
 
 const Dashboard = () => {
@@ -104,7 +104,7 @@ const Dashboard = () => {
     const renderContent = () => {
         switch (currentPage) {
             case 'profile':
-                return <ProfileContent />;
+                return <ProfileContent username={username} email={email} />;
             case 'settings':
                 return <SettingsContent />;
             default:
