@@ -55,9 +55,10 @@ const LoginForm = ({ onSwitchToSignup }) => {
       onSubmit={async (values) => {
         // handle form submission
         console.log(values)
+        const username="Soumya Ranjan Panda"; //mick username
 
         await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate network delay
-        navigate('/dashboard');
+        navigate('/dashboard',{state:{username,email:values.email}});
       }}
     >
       {({ isSubmitting }) => (
@@ -146,7 +147,7 @@ const SignupForm = ({ onSwitchToLogin }) => {
         console.log(values);
 
         await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate network delay
-        navigate('/dashboard');
+        navigate('/dashboard',{state:{username:values.username,email:values.email}});
       }}
     >
       {({ isSubmitting }) => (

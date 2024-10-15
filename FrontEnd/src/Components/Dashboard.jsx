@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Home, User, Settings, Menu, X, ChevronDown } from 'lucide-react';
 import SettingsContent from './Settings';
 import ProfileContent from './Profile';
@@ -26,7 +27,7 @@ const SidebarItem = ({ icon, label, onClick }) => (
   </div>
 );
 
-const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen }) => (
+const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen, username,email }) => (
     <header className="bg-white shadow-md p-4 flex justify-between items-center">
     <div className="flex items-center">
       <button onClick={toggleSidebar} className="mr-2 lg:hidden p-2 rounded-md hover:bg-gray-100">
@@ -47,11 +48,11 @@ const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen }) => (
       {isDropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
           <div className="px-4 py-2 text-sm text-gray-700">
-            <div className="font-semibold">John Doe</div>
-            <div className="text-gray-500">john.doe@example.com</div>
+            <div className="font-semibold">{username}</div>
+            <div className="text-gray-500">{email}</div>
           </div>
           <hr className="my-1" />
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+          <a href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
         </div>
       )}
     </div>
@@ -76,9 +77,14 @@ const DashboardContent = () => (
 );
 
 const Dashboard = () => {
+    const location=useLocation();
+    const {username,email}=location.state || {username:"Guest", email:"Not Provided"};
+
+
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -101,7 +107,10 @@ const Dashboard = () => {
         <Header 
         toggleSidebar={toggleSidebar}
         toggleDropdown={toggleDropdown}
-        isDropdownOpen={isDropdownOpen} />
+        isDropdownOpen={isDropdownOpen} 
+        username={username}
+        email={email}
+        />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           {renderContent()}
         </main>
