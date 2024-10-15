@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, User, Settings, Menu, X } from 'lucide-react';
+import { Home, User, Settings, Menu, X, ChevronDown } from 'lucide-react';
 import SettingsContent from './Settings';
 import ProfileContent from './Profile';
 
@@ -26,18 +26,34 @@ const SidebarItem = ({ icon, label, onClick }) => (
   </div>
 );
 
-const Header = ({ toggleSidebar }) => (
-  <header className="bg-white shadow-md p-4 flex justify-between items-center">
+const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen }) => (
+    <header className="bg-white shadow-md p-4 flex justify-between items-center">
     <div className="flex items-center">
       <button onClick={toggleSidebar} className="mr-2 lg:hidden p-2 rounded-md hover:bg-gray-100">
         <Menu className="h-6 w-6" />
       </button>
       <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
     </div>
-    <div className="flex items-center">
-      <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
-        <span className="text-sm font-medium text-gray-600">JD</span>
-      </div>
+    <div className="relative">
+      <button 
+        onClick={toggleDropdown}
+        className="flex items-center space-x-2 focus:outline-none"
+      >
+        <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
+          <span className="text-sm font-medium text-white">JD</span>
+        </div>
+        <ChevronDown className="h-4 w-4 text-gray-500" />
+      </button>
+      {isDropdownOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+          <div className="px-4 py-2 text-sm text-gray-700">
+            <div className="font-semibold">John Doe</div>
+            <div className="text-gray-500">john.doe@example.com</div>
+          </div>
+          <hr className="my-1" />
+          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+        </div>
+      )}
     </div>
   </header>
 );
@@ -62,8 +78,10 @@ const DashboardContent = () => (
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const renderContent = () => {
     switch (currentPage) {
@@ -80,7 +98,10 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setCurrentPage={setCurrentPage} />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header toggleSidebar={toggleSidebar} />
+        <Header 
+        toggleSidebar={toggleSidebar}
+        toggleDropdown={toggleDropdown}
+        isDropdownOpen={isDropdownOpen} />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           {renderContent()}
         </main>

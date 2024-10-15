@@ -10,17 +10,19 @@ const techTerms = [
   'Blockchain', 'IoT', 'Big Data', 'DevOps', 'Agile', 'Cybersecurity'
 ]
 
+// FloatingTerms component for floating tech words
 const FloatingTerms = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {techTerms.map((term, index) => (
         <div
           key={index}
-          className="absolute text-gray-600 opacity-20 select-none"
+          className={`absolute text-gray-600 opacity-20 select-none animate-float`}
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            transform: `rotate(${Math.random() * 360}deg)`,
+            animationDuration: `${Math.random() * 15 + 5}s`,
+            animationDelay: `${Math.random() * 5}s`,
             fontSize: `${Math.random() * (1.5 - 0.8) + 0.8}rem`
           }}
         >
@@ -30,6 +32,7 @@ const FloatingTerms = () => {
     </div>
   )
 }
+
 
 const LoginForm = ({ onSwitchToSignup }) => {
   const [showPassword, setShowPassword] = useState(false)
