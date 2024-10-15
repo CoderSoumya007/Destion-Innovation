@@ -12,7 +12,7 @@ const data = [
 ];
 
 const ChartComponent = () => (
-  <div className="bg-white p-4 rounded-lg shadow-md">
+  <div className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
     <h3 className="text-xl font-semibold mb-4">User Growth Over Time</h3>
     <LineChart width={500} height={300} data={data}>
       <XAxis dataKey="name" />
