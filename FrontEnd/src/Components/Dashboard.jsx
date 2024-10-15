@@ -35,7 +35,7 @@ const Header = ({ toggleSidebar, toggleDropdown, isDropdownOpen, username, email
             <button onClick={toggleSidebar} className="mr-2 lg:hidden p-2 rounded-md hover:bg-gray-100">
                 <Menu className="h-6 w-6" />
             </button>
-            <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Destion Innovation</h2>
         </div>
         <div className="relative">
             <button
