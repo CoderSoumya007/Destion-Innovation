@@ -1,0 +1,92 @@
+import React, { useState } from 'react';
+import { Home, User, Settings, Menu, X } from 'lucide-react';
+import SettingsContent from './Settings';
+import ProfileContent from './Profile';
+
+const Sidebar = ({ isOpen, toggleSidebar, setCurrentPage }) => (
+  <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-purple-700 text-white transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static`}>
+    <div className="flex items-center justify-between p-4">
+      <h1 className="text-2xl font-bold">MyDash</h1>
+      <button onClick={toggleSidebar} className="lg:hidden p-2 rounded-md hover:bg-purple-600">
+        <X className="h-6 w-6" />
+      </button>
+    </div>
+    <nav className="mt-8">
+      <SidebarItem icon={<Home />} label="Dashboard" onClick={() => { setCurrentPage('dashboard'); toggleSidebar(); }} />
+      <SidebarItem icon={<User />} label="Profile" onClick={() => { setCurrentPage('profile'); toggleSidebar(); }} />
+      <SidebarItem icon={<Settings />} label="Settings" onClick={() => { setCurrentPage('settings'); toggleSidebar(); }} />
+    </nav>
+  </div>
+);
+
+const SidebarItem = ({ icon, label, onClick }) => (
+  <div className="flex items-center px-4 py-3 text-gray-100 hover:bg-purple-600 cursor-pointer" onClick={onClick}>
+    {icon}
+    <span className="ml-3">{label}</span>
+  </div>
+);
+
+const Header = ({ toggleSidebar }) => (
+  <header className="bg-white shadow-md p-4 flex justify-between items-center">
+    <div className="flex items-center">
+      <button onClick={toggleSidebar} className="mr-2 lg:hidden p-2 rounded-md hover:bg-gray-100">
+        <Menu className="h-6 w-6" />
+      </button>
+      <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
+    </div>
+    <div className="flex items-center">
+      <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+        <span className="text-sm font-medium text-gray-600">JD</span>
+      </div>
+    </div>
+  </header>
+);
+
+const DashboardContent = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <div className="bg-blue-500 text-white p-6 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold mb-2">Total Users</h3>
+      <p className="text-3xl font-bold">1,234</p>
+    </div>
+    <div className="bg-green-500 text-white p-6 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold mb-2">Revenue</h3>
+      <p className="text-3xl font-bold">$12,345</p>
+    </div>
+    <div className="bg-yellow-500 text-white p-6 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold mb-2">Active Projects</h3>
+      <p className="text-3xl font-bold">42</p>
+    </div>
+  </div>
+);
+
+const Dashboard = () => {
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case 'profile':
+        return <ProfileContent />;
+      case 'settings':
+        return <SettingsContent />;
+      default:
+        return <DashboardContent />;
+    }
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setCurrentPage={setCurrentPage} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Header toggleSidebar={toggleSidebar} />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+          {renderContent()}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
